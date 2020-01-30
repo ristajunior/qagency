@@ -1,0 +1,71 @@
+{% extends 'index.html.twig' %}
+
+{% block content %}
+    <div class="content-page">
+        <!-- ============================================================== -->
+        <!-- Start Content here -->
+        <!-- ============================================================== -->
+        <div class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget">
+                        <div class="widget-header transparent">
+                            <h2><strong>Authors</strong></h2>
+                            <div class="additional-btn">
+                                <a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+                                <a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+                                <a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+                            </div>
+                        </div>
+                        {% if app.flashes('message') is defined %}
+                            {% for message in app.flashes('message') %}
+                                <div class="alert alert-success">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        {% if app.flashes('error') is defined %}
+                            {% for message in app.flashes('error') %}
+                                <div class="alert alert-danger">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <div class="widget-content">
+                            <div class="table-responsive">
+                                <table data-sortable="" class="table" data-sortable-initialized="true">
+                                    <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Full Name</th>
+                                        <th>Place of birth</th>
+                                        <th>Date of birth</th>
+                                        <th>Gender</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    {% for author in authors %}
+                                        <tr>
+                                            <td>{{ loop.index }}</td><td><strong>{{ author.first_name }} {{ author.last_name }}</strong></td>
+                                            <td>{{ author.place_of_birth }}</td><td>{{ author.birthday|date("m/d/Y") }}</td>
+                                            <td>{{ author.gender }}</td>
+                                            <td><a href="{{ path('author', {'id': author.id}) }}" class="label label-info">View author</a></td><td><a href="{{ path('delete_author', {'id': author.id}) }}" class="label label-danger">Delete author</a></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End content here -->
+        <!-- ============================================================== -->
+
+    </div>
+{% endblock %}

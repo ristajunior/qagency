@@ -1,0 +1,90 @@
+{% extends 'index.html.twig' %}
+
+{% block content %}
+    <div class="content-page">
+        <!-- ============================================================== -->
+        <!-- Start Content here -->
+        <!-- ============================================================== -->
+        <div class="content">
+            <div class="row">
+                <div class="col-sm-6 portlets ui-sortable">
+                    <div class="widget">
+                        <div class="widget-header ">
+                            <h2><i class="icon-user-3"></i> {{ author.first_name }} {{ author.last_name }}</h2>
+                        </div>
+                        <div class="widget-content padding">
+                            <p>
+                                <strong>First name:</strong> {{ author.first_name }}<br>
+                                <strong>Last name:</strong> {{ author.last_name }}<br>
+                                <strong>Birthday:</strong> {{ author.birthday|date("m/d/Y") }}<br>
+                                <strong>Gender:</strong> {{ author.gender }}<br>
+                                <strong>Place of birth:</strong> {{ author.place_of_birth }}<br>
+                                <strong>Biography:</strong><br>{{ author.biography }}<br>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget">
+                        <div class="widget-header transparent">
+                            <h2>List of books by author<strong> {{ author.first_name }} {{ author.last_name }}</strong></h2>
+                            <div class="additional-btn">
+                                <a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
+                                <a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
+                                <a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
+                            </div>
+                        </div>
+                        {% if app.flashes('message') is defined %}
+                            {% for message in app.flashes('message') %}
+                                <div class="alert alert-success">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        {% if app.flashes('error') is defined %}
+                            {% for message in app.flashes('error') %}
+                                <div class="alert alert-danger">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <div class="widget-content">
+                            <div class="table-responsive">
+                                <table data-sortable="" class="table" data-sortable-initialized="true">
+                                    <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Title</th>
+                                        <th>Release date</th>
+                                        <th>ISBN</th>
+                                        <th>Format</th>
+                                        <th>Number of pages</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    {% for book in author.books %}
+                                        <tr>
+                                            <td>{{ loop.index }}</td><td><strong>{{ book.title }}</strong></td>
+                                            <td>{{ book.release_date|date("m/d/Y") }}</td><td>{{ book.isbn }}</td>
+                                            <td>{{ book.format }}</td><td>{{ book.number_of_pages }}</td>
+                                            <td><a href="{{ path('delete_book', {'id': book.id}) }}" class="label label-danger">Delete book</a></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End content here -->
+        <!-- ============================================================== -->
+
+    </div>
+{% endblock %}

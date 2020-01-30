@@ -1,0 +1,33 @@
+{% extends 'index.html.twig' %}
+
+{% block content %}
+    <div class="content-page">
+        {% if app.session.get('user') is defined %}
+        <!-- ============================================================== -->
+        <!-- Start Content here -->
+        <!-- ============================================================== -->
+        <div class="content">
+            <!-- Page Heading Start -->
+            <div class="page-heading">
+                <h1><i style="color: green;" class="fa fa-check"></i> Successful login</h1>
+            </div>
+            <!-- Page Heading End-->
+            <div class="row">
+                <div class="col-sm-6 portlets ui-sortable">
+                    <div class="widget">
+                        <div class="widget-content padding">
+                            <p>
+                                <strong>{{ user.firstName }} {{ user.lastName }} </strong> has successfully logged in with the email
+                                <strong>{{ user.email }}</strong><br>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End content here -->
+        <!-- ============================================================== -->
+        {% endif %}
+    </div>
+{% endblock %}
