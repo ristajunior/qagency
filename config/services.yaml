@@ -3,7 +3,9 @@
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
-parameters:
+
+imports:
+    - { resource: 'parameters.yaml' }
 
 services:
     # default configuration for services in *this* file
@@ -25,3 +27,50 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    # Entities
+    App\Entity\User:
+        class: App\Entity\User
+
+    App\Entity\Author:
+        class: App\Entity\Author
+
+    App\Entity\Book:
+        class: App\Entity\Book
+
+    #Builders
+    App\Builder\UserBuilder:
+        class: App\Builder\UserBuilder
+        arguments:
+            $user: '@App\Entity\User'
+
+    # Requests to QSS API
+    App\QSSAPI\Request\RequestHandler:
+        class: App\QSSAPI\Request\RequestHandler
+        arguments:
+            $url:       '%qss.url%'
+            $session:   '@Symfony\Component\HttpFoundation\Session\SessionInterface'
+
+    App\QSSAPI\Request\TokenRequest:
+        class: App\QSSAPI\Request\TokenRequest
+        arguments:
+            $url: '%qss.url%'
+
+    App\QSSAPI\Request\AuthorRequest:
+        class: App\QSSAPI\Request\AuthorRequest
+        arguments:
+            $url: '%qss.url%'
+
+    App\QSSAPI\Request\BookRequest:
+        class: App\QSSAPI\Request\BookRequest
+        arguments:
+            $url: '%qss.url%'
+
+    # Login
+    App\QSSAPI\Login:
+        class: App\QSSAPI\Login
+        arguments:
+            $userBuilder:   '@App\Builder\UserBuilder'
+            $user:          '@App\Entity\User'
+            $session:       '@Symfony\Component\HttpFoundation\Session\SessionInterface'
+            $tokenRequest:  '@App\QSSAPI\Request\TokenRequest'

@@ -1,0 +1,3 @@
+parameters:
+    #QSS API parameters
+    qss.url: '%env(QSSAPI_URL)%'
